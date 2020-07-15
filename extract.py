@@ -109,4 +109,5 @@ if __name__ == "__main__":
         for chan in table.keys():
             for i in range(len(table[chan])):
                 f.write(','.join([str(xp), database[i], chan] + [str(x) for x in table[chan][i]]) + '\n')
+                xp += 1
 
