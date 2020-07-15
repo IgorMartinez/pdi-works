@@ -56,7 +56,7 @@ def entropy(hist):
     entr = 0
     for i in range(0, 256):
         entr += hist[i] * math.log(hist[i], 2) if hist[i] > 0 else 0
-    return - entr
+    return -entr
 
 # Extrai as características de um canal da imagem 
 def extract(channel):
@@ -84,9 +84,29 @@ def extraction_characteristic(database):
 
     for data in database:
         image = loadImage(f'database/{data}')
-
+        # Para cada canal da imagem, estraí suas características
+        # e as insere na tabela
         for ch in ["red", "green", "blue", "gray"]:
             channel = image[ch]
-            table[ch].append(extract(channel))
+            chars = extract(channel)
+            table[ch].append(chars)
     
     return table
+
+# Monta a tabela de características na main
+if __name__ == "__main__":
+    ofile = "caracteristicas.csv"
+    header = ["id", "file", "channel", "mean", "deviation", "3rd", "uniformity", "entropy", "4th"]
+    database = []
+    for data in ['benigno', 'maligno']:
+        for i in range(1, 21):
+            database.append(f'{data}/{data} ({i}).tif')
+    table = extraction_characteristic(database)
+    xp = 1
+    with open(ofile, "w") as f:
+        # Prints the CSV header
+        f.write(','.join(header) + '\n')
+        for chan in table.keys():
+            for i in range(len(table[chan])):
+                f.write(','.join([str(xp), database[i], chan] + [str(x) for x in table[chan][i]]) + '\n')
+
