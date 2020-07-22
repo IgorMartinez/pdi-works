@@ -1,6 +1,7 @@
 from cv2 import cv2
 import numpy as np
 import math as math
+from commons import *
 
 # Calcula o histograma normalizado da imagem
 def normalizedHistogram(image):
@@ -98,17 +99,14 @@ if __name__ == "__main__":
     sep = ';'
     ofile = "caracteristicas.csv"
     header = ["id", "file", "channel", "mean", "deviation", "3rd", "uniformity", "entropy", "4th"]
-    database = []
-    for data in ['benigno', 'maligno']:
-        for i in range(1, 21):
-            database.append(f'{data}/{data} ({i}).tif')
-    table = extraction_characteristic(database)
+    db = buildDatabase()
+    table = extraction_characteristic(db)
     xp = 1
     with open(ofile, "w") as f:
         # Prints the CSV header
         f.write(sep.join(header) + '\n')
         for chan in table.keys():
             for i in range(len(table[chan])):
-                f.write(sep.join([str(xp), database[i], chan] + [str(x) for x in table[chan][i]]) + '\n')
+                f.write(sep.join([str(xp), db[i], chan] + [str(x) for x in table[chan][i]]) + '\n')
                 xp += 1
 

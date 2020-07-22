@@ -1,9 +1,9 @@
 #importações para classificação
-import pandas as pd
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score 
 from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
+from commons import *
 
 def extraction_classification(X, y):
     # Test_size diz a porcentagem dos dados que usaremos para teste
@@ -26,3 +26,6 @@ def extraction_classification(X, y):
 
     # Cria a matriz de classificação, a qual apresenta mais características da performance
     print(confusion_matrix(SVC_prediction, y_test))
+
+if __name__ == "__main__":
+    db = buildDatabase()

@@ -2,17 +2,15 @@ from cv2 import cv2
 import numpy as np
 import math as math
 from extract import *
-from classification import *
+from svm import *
+from commons import *
 
 if __name__ == '__main__':
     print('[LOG] O programa foi iniciado')
 
     # Monta a base de dados
-    database = []
+    database = buildDatabase()
     vetor_y = ['benigno'] * 20 + ['maligno'] * 20
-    for data in ['benigno', 'maligno']:
-        for i in range(1, 21):
-            database.append(f'{data}/{data} ({i}).tif')
 
     # Extrai as características
     # tables = {"red": [], "green": [], "blue": [], "gray": []}
@@ -25,3 +23,8 @@ if __name__ == '__main__':
         extraction_classification(tables[ch], vetor_y)
 
     print('[LOG] O programa será encerrado')
+
+if __name__ == "__main__":
+    y = np.array(['benigno']*20 + ['maligno']*20)
+    db = buildDatabase()
+    if 
