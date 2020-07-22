@@ -1,7 +1,7 @@
 from cv2 import cv2
 import numpy as np
 import math as math
-from commons import *
+import commons as cms
 
 # Calcula o histograma normalizado da imagem
 def normalizedHistogram(image):
@@ -48,7 +48,7 @@ def entropy(hist):
     return -entr
 
 # Extrai as características de um canal da imagem 
-def extract(channel):
+def extractChannel(channel):
     histogram = normalizedHistogram(channel)
     avg = mean(histogram)
     std = deviation(histogram, avg)
@@ -60,9 +60,15 @@ def extract(channel):
 
 # Realiza a extração de características de cada canal das imagens presentes na base de dados
 def extract(database):
-    # Posição no vetor
-    # [média, desvio padrão, 3 momento, uniformidade, entropia, 4 momento]
-
+    # Especificação da matriz de cada canal
+    #
+    #       | média | desvio padrão | 3 momento | uniformidade | entropia | 4 momento |
+    # ------+-------+---------------+-----------+--------------+----------+-----------|
+    # img01 |  ...  |      ...      |    ...    |     ...      |    ...   |     ...   |
+    # img02 |  ...  |      ...      |    ...    |     ...      |    ...   |     ...   |
+    #  ...  |  ...  |      ...      |    ...    |     ...      |    ...   |     ...   |
+    # img40 |  ...  |      ...      |    ...    |     ...      |    ...   |     ...   |
+    #
     # Define as tabelas que serão armazenadas as estatísitica de cada canal
     table = {
         "red" : [],
@@ -70,31 +76,15 @@ def extract(database):
         "blue": [],
         "gray": []
     }
-
-    for data in database:
-        image = loadImage(f'database/{data}')
+    # Carrega cadaa imagem da base de dados e extrai suas características
+    # para cada canal
+    for fname in database:
+        image = cms.loadImage(fname)
         # Para cada canal da imagem, estraí suas características
         # e as insere na tabela
         for ch in ["red", "green", "blue", "gray"]:
             channel = image[ch]
-            chars = extract(channel)
+            chars = extractChannel(channel)
             table[ch].append(chars)
-    
+    # Retorna a tabela
     return table
-
-# Monta a tabela de características na main
-if __name__ == "__main__":
-    sep = ';'
-    ofile = "caracteristicas.csv"
-    header = ["id", "file", "channel", "mean", "deviation", "3rd", "uniformity", "entropy", "4th"]
-    db = buildDatabase()
-    table = extraction_characteristic(db)
-    xp = 1
-    with open(ofile, "w") as f:
-        # Prints the CSV header
-        f.write(sep.join(header) + '\n')
-        for chan in table.keys():
-            for i in range(len(table[chan])):
-                f.write(sep.join([str(xp), db[i], chan] + [str(x) for x in table[chan][i]]) + '\n')
-                xp += 1
-

@@ -1,8 +1,10 @@
 import cv2
+import numpy as np
 
+# Constrói um vetor com todos os nomes dos arquivos das imagens analizadas
 def buildDatabase():
-    return [f'{data}/{data} ({i}).tif' for data in ['beningno', 'maligno'] for i in range(1, 21)]
-
+    return ['database/%s/%s (%s).tif' % (data,data,i) for data in ['benigno', 'maligno'] for i in range(1, 21)]
+# Carrega a tabela de características a partir de um arquivo CSV
 def loadCaracteristics(fname, sep=';'):
     table = {
         "red": [],
@@ -28,15 +30,16 @@ def loadImage(fname):
         "blue": blue,
         "gray": gray
     }
-
-def saveCaracteristics(rgbTable, ofname, sep=';'):
+    
+# Salva a tabela de características, por canal, em um arquivo CSV
+def saveCaracteristics(table, ofname, sep=';'):
     header = ["id", "file", "channel", "mean", "deviation", "3rd", "uniformity", "entropy", "4th"]
     db = buildDatabase()
     xp = 1
     with open(ofname, "w") as f:
         # Prints the CSV header
         f.write(sep.join(header) + '\n')
-        for chan in rgbTable.keys():
-            for i in range(len(rgbTable[chan])):
-                f.write(sep.join([str(xp), db[i], chan] + [str(x) for x in rgbTable[chan][i]]) + '\n')
+        for channel in table.keys():
+            for i in range(len(table[channel])):
+                f.write(sep.join([str(xp), db[i], channel] + [str(x) for x in table[channel][i]]) + '\n')
                 xp += 1
