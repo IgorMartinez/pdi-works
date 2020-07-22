@@ -1,11 +1,9 @@
 from sklearn import tree
 from sklearn.metrics import accuracy_score
 
-METHOD_NAME = 'dtree'
+NAME = 'decision_tree'
 
 def classify(x_train, x_test, y_train, y_test):
-    print('[LOG] Aplicando o algoritmo de classificação Decision Tree')
-    
     # Instancia um objeto da classe do classificador
     clf = tree.DecisionTreeClassifier()
 
@@ -17,6 +15,5 @@ def classify(x_train, x_test, y_train, y_test):
 
     # Mede a acurácia para saber a performance do algoritmo
     acurracy = accuracy_score(prediction, y_test)
-    print(f'[LOG] A acurácia do algoritmo foi de {acurracy}')
 
     return acurracy

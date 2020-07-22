@@ -1,8 +1,10 @@
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 
-def multilayer_perceptron(x_train, x_test, y_train, y_test):
-    print('[LOG] Aplicando o algoritmo de classificação MultiLayer Percepton')
+NAME = 'multilayer_perceptron'
+
+def classify(x_train, x_test, y_train, y_test):
+
     
     # Instancia um objeto da classe do classificador
     clf = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
@@ -15,6 +17,6 @@ def multilayer_perceptron(x_train, x_test, y_train, y_test):
 
     # Mede a acurácia para saber a performance do algoritmo
     acurracy = accuracy_score(prediction, y_test)
-    print(f'[LOG] A acurácia do algoritmo foi de {acurracy}')
+
 
     return acurracy

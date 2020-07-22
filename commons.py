@@ -3,7 +3,7 @@ import cv2
 def buildDatabase():
     return [f'{data}/{data} ({i}).tif' for data in ['beningno', 'maligno'] for i in range(1, 21)]
 
-def loadCaracteristics(fname):
+def loadCaracteristics(fname, sep=';'):
     table = {
         "red": [],
         "green": [],
@@ -12,8 +12,9 @@ def loadCaracteristics(fname):
     }
     with open(fname, "r") as f:
         for line in f.readlines()[1:]:
-            ch = line[0]
-            table[ch].append(line[1:])
+            values = line.split(sep)
+            ch = values[2]
+            table[ch].append(values[3:])
     return table
 
 # Carrega as imagens da base de dados e separa por canal de cor
