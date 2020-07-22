@@ -1,13 +1,11 @@
-from sklearn import tree
+from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 
-METHOD_NAME = 'dtree'
-
-def classify(x_train, x_test, y_train, y_test):
-    print('[LOG] Aplicando o algoritmo de classificação Decision Tree')
+def multilayer_perceptron(x_train, x_test, y_train, y_test):
+    print('[LOG] Aplicando o algoritmo de classificação MultiLayer Percepton')
     
     # Instancia um objeto da classe do classificador
-    clf = tree.DecisionTreeClassifier()
+    clf = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
 
     # Ajusta o modelo
     clf.fit(x_train, y_train)
