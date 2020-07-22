@@ -95,6 +95,7 @@ def extraction_characteristic(database):
 
 # Monta a tabela de características na main
 if __name__ == "__main__":
+    sep = ';'
     ofile = "caracteristicas.csv"
     header = ["id", "file", "channel", "mean", "deviation", "3rd", "uniformity", "entropy", "4th"]
     database = []
@@ -105,9 +106,9 @@ if __name__ == "__main__":
     xp = 1
     with open(ofile, "w") as f:
         # Prints the CSV header
-        f.write(','.join(header) + '\n')
+        f.write(sep.join(header) + '\n')
         for chan in table.keys():
             for i in range(len(table[chan])):
-                f.write(','.join([str(xp), database[i], chan] + [str(x) for x in table[chan][i]]) + '\n')
+                f.write(sep.join([str(xp), database[i], chan] + [str(x) for x in table[chan][i]]) + '\n')
                 xp += 1
 
