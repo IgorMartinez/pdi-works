@@ -2,10 +2,11 @@
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score 
 from sklearn.svm import SVC
-from sklearn.model_selection import train_test_split
 from commons import *
 
-def support_vector(x_train, x_test, y_train, y_test):
+METHOD_NAME = "dtree"
+
+def classify(x_train, x_test, y_train, y_test):
     print('[LOG] Aplicando o algoritmo de classificação Support Vector')
 
     # Classifica as imagens com Support Vector Classifier (SVN)

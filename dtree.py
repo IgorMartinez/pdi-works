@@ -3,7 +3,9 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score 
 from sklearn.model_selection import train_test_split
 
-def decision_tree(x_train, x_test, y_train, y_test):
+METHOD_NAME = 'dtree'
+
+def classify(x_train, x_test, y_train, y_test):
     print('[LOG] Aplicando o algoritmo de classificação Decision Tree')
     
     # Instancia um objeto da classe do classificador

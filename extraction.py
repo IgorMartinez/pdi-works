@@ -7,18 +7,6 @@ from commons import *
 def normalizedHistogram(image):
     return np.array([np.count_nonzero(image == x) for x in range(256)]) / (image.shape[0] * image.shape[1])
 
-# Carrega as imagens da base de dados e separa por canal de cor
-def loadImage(fname):
-    img = cv2.imread(fname)
-    blue, green, red = cv2.split(img)
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    return {
-        "red": red, 
-        "green": green,
-        "blue": blue,
-        "gray": gray
-    }
-
 # Calcula a média dos pixels da imagem
 def mean(hist):
     m = 0
@@ -71,7 +59,7 @@ def extract(channel):
     return [avg, std, tdm, uni, ent, ftm]
 
 # Realiza a extração de características de cada canal das imagens presentes na base de dados
-def extraction_characteristic(database):
+def extract(database):
     # Posição no vetor
     # [média, desvio padrão, 3 momento, uniformidade, entropia, 4 momento]
 

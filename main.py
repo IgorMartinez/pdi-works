@@ -1,30 +1,36 @@
-from cv2 import cv2
 import numpy as np
 import math as math
-from extract import *
-from svm import *
-from commons import *
+import extraction
+import svm
+import dtree
+import commons as cms
+import os
+from sklearn.model_selection import train_test_split
 
-if __name__ == '__main__':
-    print('[LOG] O programa foi iniciado')
+CHARACTERISTICS_CSV = 'characteristics.csv'
+SEED = 'pdi'
 
-    # Monta a base de dados
-    database = buildDatabase()
-    vetor_y = ['benigno'] * 20 + ['maligno'] * 20
-
-    # Extrai as características
-    # tables = {"red": [], "green": [], "blue": [], "gray": []}
-    # [media, desvio padrao, 3 momento, uniformidade, entropia, 4 momento]
-    tables = extraction_characteristic(database)
-
-    # Classifica
-    for ch in ["red", "green", "blue", "gray"]:
-        print(f'[LOG] Acurácia canal {ch}')
-        extraction_classification(tables[ch], vetor_y)
-
-    print('[LOG] O programa será encerrado')
+def main(ofile, sep=';'):
+    y = np.array(['benigno']*20 + ['maligno']*20)
+    db = cms.buildDatabase()
+    header = ['id', 'channel', 'svm_accur', 'dtree_acur', 'nn_accur']
+    table = []
+    if os.path.exists(CHARACTERISTICS_CSV):
+        table = cms.loadCaracteristics(CHARACTERISTICS_CSV)
+    else:
+        table = extraction.extract(db)
+        cms.saveCaracteristics(table, CHARACTERISTICS_CSV)
+    with open(ofile, "w") as f:
+        f.write(sep.join(header) + '\n')
+        for ch in ['red', 'green', 'blue', 'gray']:
+            for size in range(0.1, 1.0, 0.1):
+                for method in [svm, dtree]:
+                    xs, xt, ys, yt = train_test_split(table[ch], y, test_size=size, random_state=SEED)
+                    accur = method.classify(xs, xt, ys, yt)
 
 if __name__ == "__main__":
-    y = np.array(['benigno']*20 + ['maligno']*20)
-    db = buildDatabase()
-    if 
+    main('classification.csv')
+
+                
+
+    
