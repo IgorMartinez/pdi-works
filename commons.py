@@ -16,7 +16,7 @@ def loadCaracteristics(fname, sep=';'):
         for line in f.readlines()[1:]:
             values = line.split(sep)
             ch = values[2]
-            table[ch].append(values[3:])
+            table[ch].append([float(x) for x in values[3:]])
     return table
 
 # Carrega as imagens da base de dados e separa por canal de cor

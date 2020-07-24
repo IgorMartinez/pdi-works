@@ -9,8 +9,8 @@ from sklearn.model_selection import train_test_split
 
 CHARACTERISTICS_CSV = 'characteristics.csv'
 CLASSIFICATION_CSV = 'classification.csv'
-METHODS = [svm, dtree]
-TESTS = 500
+METHODS = [svm, dtree, mlpt]
+TESTS = 5
 
 def main(ofile, sep=';'):
     y = np.array(['benigno']*20 + ['maligno']*20)
@@ -35,6 +35,7 @@ def main(ofile, sep=';'):
                         if len(np.unique(ys)) > 1:
                             break
                     for method in METHODS:
+                        print(f"canal: {ch} tamanho: {size:.2f} metodo: {method.NAME} teste: {test}")
                         method.accur.append(method.classify(xs, xt, ys, yt))
                 f.write(sep.join([f'{xp}', ch, f'{size:.02f}'] + [str(np.mean(m.accur)) for m in METHODS]) + '\n')
                 xp += 1
