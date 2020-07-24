@@ -41,5 +41,5 @@ def saveCaracteristics(table, ofname, sep=';'):
         f.write(sep.join(header) + '\n')
         for channel in table.keys():
             for i in range(len(table[channel])):
-                f.write(sep.join([str(xp), db[i], channel] + [str(x) for x in table[channel][i]]) + '\n')
+                f.write(sep.join([f'{xp}', db[i], channel] + [f'{x:.03f}' for x in table[channel][i]]) + '\n')
                 xp += 1
