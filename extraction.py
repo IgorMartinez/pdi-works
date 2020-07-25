@@ -76,12 +76,10 @@ def extract(database):
         "blue": [],
         "gray": []
     }
-    # Carrega cadaa imagem da base de dados e extrai suas características
-    # para cada canal
+    # Carrega cadaa imagem da base de dados e extrai suas características para cada canal
     for fname in database:
         image = cms.loadImage(fname)
-        # Para cada canal da imagem, estraí suas características
-        # e as insere na tabela
+        # Para cada canal da imagem, estraí suas características e as insere na tabela
         for ch in ["red", "green", "blue", "gray"]:
             channel = image[ch]
             chars = extractChannel(channel)

@@ -4,6 +4,7 @@ import numpy as np
 # Constrói um vetor com todos os nomes dos arquivos das imagens analizadas
 def buildDatabase():
     return ['database/%s/%s (%s).tif' % (data,data,i) for data in ['benigno', 'maligno'] for i in range(1, 21)]
+
 # Carrega a tabela de características a partir de um arquivo CSV
 def loadCaracteristics(fname, sep=';'):
     table = {

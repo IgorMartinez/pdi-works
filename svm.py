@@ -4,6 +4,7 @@ from sklearn.metrics import accuracy_score
 NAME = 'svm'
 
 def classify(x_train, x_test, y_train, y_test):
+    
     # Classifica as imagens com Support Vector Classifier (SVN)
     clf = SVC()
 
